@@ -15,10 +15,7 @@ const fetchMyIP = function(callback) {
 
   // use request to fetch IP address from JSON API
   request(url, (error, response, body) => {
-    if (error) {
-      callback(error, null);
-      return;
-    }
+    if (error) return callback(error, null);
 
     // if non-200 status, assume server error
     if (response.statusCode !== 200) {
@@ -27,11 +24,11 @@ const fetchMyIP = function(callback) {
       return;
     }
 
-    const data = JSON.parse(body);
-    if (!data) {
+    const ip = JSON.parse(body).ip;
+    if (!ip) {
       callback(error, null);
     } else {
-      callback(null, data.ip);
+      callback(null, ip);
     }
   });
 };
